@@ -1,6 +1,14 @@
 language: java
 jdk: openjdk8
 
+# Setting the global variables required for build
+env:
+  global:
+  - ANDROID_API_LEVEL=25
+  - ANDROID_BUILD_TOOLS_VERSION=29.0.3
+  - ANDROID_HOME=$HOME/android-sdk
+  - PATH=$ANDROID_HOME/tools/bin:$PATH
+
 before_cache:
   # Do not cache a few Gradle files/directories (see https://docs.travis-ci.com/user/languages/java/#Caching)
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -29,14 +37,6 @@ install:
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platform-tools' > /dev/null
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'build-tools;$ANDROID_BUILD_TOOLS_VERSION' > /dev/null
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platforms;android-$ANDROID_API_LEVEL' > /dev/null
-
-# Setting the global variables required for build
-env:
-  global:
-  - ANDROID_API_LEVEL=25
-  - ANDROID_BUILD_TOOLS_VERSION=29.0.3
-  - ANDROID_HOME=$HOME/android-sdk
-  - PATH=$ANDROID_HOME/tools/bin:$PATH
 
 # Emulator Management: Create, Start and Wait
 # before_script:
