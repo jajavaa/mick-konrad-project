@@ -2,41 +2,83 @@ language: java
 jdk: openjdk8
 
 # Setting the global variables required for build
-env:
-  global:
-  - ANDROID_API_LEVEL=25
-  - ANDROID_BUILD_TOOLS_VERSION=29.0.3
-  - ANDROID_HOME=$HOME/android-sdk
-  - PATH=$ANDROID_HOME/tools/bin:$PATH
+# env:
+#   global:
+#   - CODECOV_TOKEN="fdab30d9-40e8-4f5f-9217-c37cd2f506b9"
 
-before_cache:
-  # Do not cache a few Gradle files/directories (see https://docs.travis-ci.com/user/languages/java/#Caching)
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+# before_cache:
+#   # Do not cache a few Gradle files/directories (see https://docs.travis-ci.com/user/languages/java/#Caching)
+#   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+#   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
-cache:
-  directories:
-    # Android SDK
-    - $HOME/android-sdk-dl
-    - $HOME/android-sdk
+# cache:
+#   directories:
+#     # Android SDK
+#     - $HOME/android-sdk-dl
+#     - $HOME/android-sdk
 
-    # Gradle dependencies
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+#     # Gradle dependencies
+#     - $HOME/.gradle/caches/
+#     - $HOME/.gradle/wrapper/
 
-    # Android build cache (see http://tools.android.com/tech-docs/build-cache)
-    - $HOME/.android/build-cache
+#     # Android build cache (see http://tools.android.com/tech-docs/build-cache)
+#     - $HOME/.android/build-cache
 
-install:
-  # Download and unzip the Android SDK tools (if not already there thanks to the cache mechanism)
-  # Latest version available here: https://developer.android.com/studio/#command-tools
-  - if test ! -e $HOME/android-sdk-dl/sdk-tools.zip ; then curl https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip > $HOME/android-sdk-dl/sdk-tools.zip ; fi
-  - unzip -qq -n $HOME/android-sdk-dl/sdk-tools.zip -d $HOME/android-sdk
+jobs:
+  include:
+    - stage: build
+      env:
+        global:
+          - ANDROID_API_LEVEL=25
+          - ANDROID_BUILD_TOOLS_VERSION=29.0.3
+          - ANDROID_HOME=$HOME/android-sdk
+          - PATH=$ANDROID_HOME/tools/bin:$PATH
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+      cache:
+        directories:
+          # Android SDK
+          - $HOME/android-sdk-dl
+          - $HOME/android-sdk
+          # Gradle dependencies
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          # Android build cache (see http://tools.android.com/tech-docs/build-cache)
+          - $HOME/.android/build-cache
+      install:
+        # Download and unzip the Android SDK tools (if not already there thanks to the cache mechanism)
+        # Latest version available here: https://developer.android.com/studio/#command-tools
+        - if test ! -e $HOME/android-sdk-dl/sdk-tools.zip ; then curl https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip > $HOME/android-sdk-dl/sdk-tools.zip ; fi
+        - unzip -qq -n $HOME/android-sdk-dl/sdk-tools.zip -d $HOME/android-sdk
 
-  # Install or update Android SDK components (will not do anything if already up to date thanks to the cache mechanism)
-  - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platform-tools' > /dev/null
-  - echo y | $HOME/android-sdk/tools/bin/sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" > /dev/null
-  - echo y | $HOME/android-sdk/tools/bin/sdkmanager "platforms;android-$ANDROID_API_LEVEL" > /dev/null
+        # Install or update Android SDK components (will not do anything if already up to date thanks to the cache mechanism)
+        - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platform-tools' > /dev/null
+        - echo y | $HOME/android-sdk/tools/bin/sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" > /dev/null
+        - echo y | $HOME/android-sdk/tools/bin/sdkmanager "platforms;android-$ANDROID_API_LEVEL" > /dev/null
+      script:
+        - ./gradlew build
+    - stage: test
+      env:
+        global:
+        - CODECOV_TOKEN="fdab30d9-40e8-4f5f-9217-c37cd2f506b9"
+      script:
+        - ./gradlew connectedTest
+        - bash <(curl -s https://codecov.io/bash)
+
+stages:
+  - build
+  - test
+# install:
+#   # Download and unzip the Android SDK tools (if not already there thanks to the cache mechanism)
+#   # Latest version available here: https://developer.android.com/studio/#command-tools
+#   - if test ! -e $HOME/android-sdk-dl/sdk-tools.zip ; then curl https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip > $HOME/android-sdk-dl/sdk-tools.zip ; fi
+#   - unzip -qq -n $HOME/android-sdk-dl/sdk-tools.zip -d $HOME/android-sdk
+
+#   # Install or update Android SDK components (will not do anything if already up to date thanks to the cache mechanism)
+#   - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platform-tools' > /dev/null
+#   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" > /dev/null
+#   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "platforms;android-$ANDROID_API_LEVEL" > /dev/null
 
 # Emulator Management: Create, Start and Wait
 # before_script:
