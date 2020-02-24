@@ -32,11 +32,11 @@ install:
 
 # Setting the global variables required for build
 env:
+  global:
+  - ANDROID_API_LEVEL=25
+  - ANDROID_BUILD_TOOLS_VERSION=29.0.3
   - ANDROID_HOME=$HOME/android-sdk
   - PATH=$ANDROID_HOME/tools/bin:$PATH
-  global:
-    - ANDROID_API_LEVEL=25
-    - ANDROID_BUILD_TOOLS_VERSION=29.0.3
 
 # Emulator Management: Create, Start and Wait
 # before_script:
