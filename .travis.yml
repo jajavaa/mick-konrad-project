@@ -35,8 +35,8 @@ install:
 
   # Install or update Android SDK components (will not do anything if already up to date thanks to the cache mechanism)
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platform-tools' > /dev/null
-  - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'build-tools;$ANDROID_BUILD_TOOLS_VERSION' > /dev/null
-  - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platforms;android-$ANDROID_API_LEVEL' > /dev/null
+  - echo y | $HOME/android-sdk/tools/bin/sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" > /dev/null
+  - echo y | $HOME/android-sdk/tools/bin/sdkmanager "platforms;android-$ANDROID_API_LEVEL" > /dev/null
 
 # Emulator Management: Create, Start and Wait
 # before_script:
