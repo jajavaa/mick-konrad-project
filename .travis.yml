@@ -50,15 +50,13 @@ install:
 # Emulator Management: Create
 before_script:
   - echo no | $HOME/android-sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-$ANDROID_API_LEVEL;default;$ANDROID_DEVICE_TYPE"
-
-script:
-  # Build the project to an apk
-  - ./gradlew build --stacktrace
   # For running the tests emulator must be running breforehand
   - emulator -avd test -no-audio -no-window &
   # Wait for emulator device to be ready and unlock device
   - adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
-  # Run all tests
-  - ./gradlew test --stacktrace
+
+script:
+  # Build and test the application. For testing a device needs to be emulated
+  - ./gradlew build --stacktrace
   # Upload test results
   - bash <(curl -s https://codecov.io/bash)
