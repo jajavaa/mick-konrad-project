@@ -43,14 +43,14 @@ install:
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platform-tools' > /dev/null
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" > /dev/null
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "platforms;android-$ANDROID_API_LEVEL" > /dev/null
-  - echo y | $HOEM/android-sdk/tools/bin/sdkmanager "system-images;android-$ANDROID_API_LEVEL;default;$ANDROID_DEVICE_TYPE" > /dev/null
+  - echo y | $HOME/android-sdk/tools/bin/sdkmanager "system-images;android-$ANDROID_API_LEVEL;default;$ANDROID_DEVICE_TYPE" > /dev/null
 
 # Emulator Management: Create, Start and Wait
-# before_script:
-#   - echo no | android create avd --force -n test -t android-29 --abi x86
-#   - emulator -avd test -no-audio -no-window &
-#   - android-wait-for-emulator
-#   - adb shell input keyevent 82 &
+before_script:
+  - echo no | android create avd --force -n test -t android-29 --abi x86
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 
 script:
   - ./gradlew build --stacktrace
