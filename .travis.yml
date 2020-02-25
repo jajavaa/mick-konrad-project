@@ -47,6 +47,6 @@ install:
 #   - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew build
-  - ./gradlew test
+  - ./gradlew build --stacktrace --no-deamon
+  - ./gradlew test --stacktrace --no-deamon
   - bash <(curl -s https://codecov.io/bash)
