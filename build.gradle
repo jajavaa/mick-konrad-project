@@ -14,7 +14,7 @@ buildscript {
     }
 }
 
-apply plugin: 'com.vanniktech.android.junit.jacoco'
+apply plugin: 'com.vanniktech.android.junit.jacoco-android'
 
 jacoco {
   toolVersion = "0.8.4"
