@@ -53,7 +53,7 @@ before_script:
   # For running the tests emulator must be running breforehand
   - emulator -avd test -no-audio -no-window &
   # Wait for emulator device to be ready and unlock device
-  - $HOME/android-sdk/tools/bin/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
+  - $HOME/android-sdk/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
 
 script:
   # Build and test the application. For testing a device needs to be emulated
