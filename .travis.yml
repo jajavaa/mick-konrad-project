@@ -58,7 +58,7 @@ install:
   # For running the tests emulator must be running breforehand
   - $HOME/android-sdk/emulator/emulator -avd test -no-audio -no-window &
   # Wait for emulator device to be ready and unlock device
-  - android-wait-for-emulator
+  - $HOME/android-sdk/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
   # Unlock device screen
   - $HOME/android-sdk/platform-tools/adb shell input keyevent 82 &
 script:
