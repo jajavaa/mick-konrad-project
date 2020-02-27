@@ -56,7 +56,7 @@ install:
   # - echo no | android create avd --force -n test -t android-29 --abi x86
   - echo no | $HOME/android-sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-$ANDROID_DEVICE_API;default;$ANDROID_DEVICE_TYPE"
   # For running the tests emulator must be running breforehand
-  - $HOME/android-sdk/emulator/emulator -avd test -no-audio -no-window &
+  - $HOME/android-sdk/tools/emulator -avd test -no-audio -no-window &
   # Wait for emulator device to be ready and unlock device
   - $HOME/android-sdk/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
   # Unlock device screen
