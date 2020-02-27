@@ -62,7 +62,7 @@ install:
   # Unlock device screen
   - $HOME/android-sdk/platform-tools/adb shell input keyevent 82 &
 script:
-  # Build application without testing.   
+  # Build application without testing.
   - ./gradlew build --stacktrace
   # Upload test results
   - bash <(curl -s https://codecov.io/bash)
