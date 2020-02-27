@@ -7,7 +7,10 @@ env:
     # Android build environment variables
     - ANDROID_API_LEVEL=29
     - ANDROID_BUILD_TOOLS_VERSION=29.0.3
-    - ANDROID_DEVICE_TYPE=x86_64
+
+    # Android Virtual Devlice environment variables
+    - ANDROID_DEVICE_API=25
+    - ANDROID_DEVICE_TYPE=armeabi-v7a
 
     # System environmment variables
     - ANDROID_HOME=$HOME/android-sdk
@@ -45,21 +48,21 @@ install:
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "platforms;android-$ANDROID_API_LEVEL" > /dev/null
 
   # Donwload and install Android System Image
-  # - echo y | $HOME/android-sdk/tools/bin/sdkmanager "system-images;android-$ANDROID_API_LEVEL;default;$ANDROID_DEVICE_TYPE" > /dev/null
+  - echo y | $HOME/android-sdk/tools/bin/sdkmanager "system-images;android-$ANDROID_DEVICE_API;default;$ANDROID_DEVICE_TYPE" > /dev/null
 
 # Emulator Management: Create
 # 
 # before_script:
-#   # - echo no | android create avd --force -n test -t android-29 --abi x86
-#   - echo no | $HOME/android-sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-$ANDROID_API_LEVEL;default;$ANDROID_DEVICE_TYPE"
-#   # For running the tests emulator must be running breforehand
-#   - $HOME/android-sdk/emulator/emulator -avd test -no-audio -no-window &
-#   # Wait for emulator device to be ready and unlock device
-#   - $HOME/android-sdk/platform-tools/adb wait-for-device
-#   # Unlock device screen
-#   - $HOME/android-sdk/platform-tools/adb shell input keyevent 82 &
+  # - echo no | android create avd --force -n test -t android-29 --abi x86
+  - echo no | $HOME/android-sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-$ANDROID_DEVICE_API;default;$ANDROID_DEVICE_TYPE"
+  # For running the tests emulator must be running breforehand
+  - $HOME/android-sdk/emulator/emulator -avd test -no-audio -no-window &
+  # Wait for emulator device to be ready and unlock device
+  - $HOME/android-sdk/platform-tools/adb wait-for-device
+  # Unlock device screen
+  - $HOME/android-sdk/platform-tools/adb shell input keyevent 82 &
 script:
-  # Build and test the application. For testing a device needs to be emulated
+  # Build application without testing.
   - ./gradlew build --stacktrace
   # Upload test results
   - bash <(curl -s https://codecov.io/bash)
