@@ -57,7 +57,7 @@ install:
   - echo no | $HOME/android-sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-$ANDROID_DEVICE_API;default;$ANDROID_DEVICE_TYPE"
   # For running the tests emulator must be running breforehand
   - $HOME/android-sdk/emulator/emulator -avd test -no-audio -no-window &
-  # Wait for emulator device to be ready and unlock device
+  # Wait for emulator device to be ready and unlock device.
   - $HOME/android-sdk/platform-tools/adb wait-for-device
   # Unlock device screen
   - $HOME/android-sdk/platform-tools/adb shell input keyevent 82 &
