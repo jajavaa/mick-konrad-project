@@ -43,6 +43,7 @@ install:
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platform-tools' > /dev/null
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" > /dev/null
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "platforms;android-$ANDROID_API_LEVEL" > /dev/null
+  - $HOME/android-sdk/tools/bin/sdkmanager --list
 
   # Donwload and install Android System Image
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "system-images;android-$ANDROID_API_LEVEL;default;$ANDROID_DEVICE_TYPE" > /dev/null
