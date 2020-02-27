@@ -7,7 +7,7 @@ env:
     # Android build environment variables
     - ANDROID_API_LEVEL=29
     - ANDROID_BUILD_TOOLS_VERSION=29.0.3
-    - ANDROID_DEVICE_TYPE=x86
+    - ANDROID_DEVICE_TYPE=armeabi-v7a
 
     # System environmment variables
     - ANDROID_HOME=$HOME/android-sdk
@@ -50,7 +50,7 @@ install:
 # Emulator Management: Create
 before_script:
   # - echo no | android create avd --force -n test -t android-29 --abi x86
-  - echo no | $HOME/android-sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-$ANDROID_API_LEVEL;default;x86"
+  - echo no | $HOME/android-sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-$ANDROID_API_LEVEL;default;$ANDROID_DEVICE_TYPE"
   # For running the tests emulator must be running breforehand
   - $HOME/android-sdk/emulator/emulator -avd test -no-audio -no-window &
   # Wait for emulator device to be ready and unlock device
