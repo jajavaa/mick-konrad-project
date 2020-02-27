@@ -58,11 +58,11 @@ install:
   # For running the tests emulator must be running breforehand
   - $HOME/android-sdk/emulator/emulator -avd test -no-audio -no-window &
   # Wait for emulator device to be ready and unlock device
-  - $HOME/android-sdk/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
+  - $HOME/android-sdk/platform-tools/adb wait-for-device
   # Unlock device screen
   - $HOME/android-sdk/platform-tools/adb shell input keyevent 82 &
 script:
-  # Build application without testing.
+  # Build application.
   - ./gradlew build --stacktrace
   # Upload test results
   - bash <(curl -s https://codecov.io/bash)
