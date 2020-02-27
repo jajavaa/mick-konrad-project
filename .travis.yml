@@ -9,7 +9,7 @@ env:
     - ANDROID_BUILD_TOOLS_VERSION=29.0.3
 
     # Android Virtual Devlice environment variables
-    - ANDROID_DEVICE_API=25
+    - ANDROID_DEVICE_API=24
     - ANDROID_DEVICE_TYPE=armeabi-v7a
 
     # System environmment variables
