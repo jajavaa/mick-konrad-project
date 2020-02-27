@@ -7,7 +7,7 @@ env:
     # Android build environment variables
     - ANDROID_API_LEVEL=29
     - ANDROID_BUILD_TOOLS_VERSION=29.0.3
-    - ANDROID_DEVICE_TYPE=armeabi-v7a
+    - ANDROID_DEVICE_TYPE=x86_64
 
     # System environmment variables
     - ANDROID_HOME=$HOME/android-sdk
@@ -43,7 +43,6 @@ install:
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platform-tools' > /dev/null
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" > /dev/null
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "platforms;android-$ANDROID_API_LEVEL" > /dev/null
-  - $HOME/android-sdk/tools/bin/sdkmanager --list
 
   # Donwload and install Android System Image
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "system-images;android-$ANDROID_API_LEVEL;default;$ANDROID_DEVICE_TYPE" > /dev/null
