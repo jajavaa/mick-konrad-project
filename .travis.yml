@@ -54,6 +54,8 @@ before_script:
   - $HOME/android-sdk/tools/emulator -avd test -no-audio -no-window &
   # Wait for emulator device to be ready and unlock device
   - $HOME/android-sdk/platform-tools/adb wait-for-device
+  # Unlock device screen
+  - $HOME/android-sdk/platform-tools/adb shell input keyevent 82 &
 script:
   # Build and test the application. For testing a device needs to be emulated
   - ./gradlew build --stacktrace
