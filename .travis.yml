@@ -51,8 +51,7 @@ install:
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager "system-images;android-$ANDROID_DEVICE_API;default;$ANDROID_DEVICE_TYPE" > /dev/null
 
 # Emulator Management: Create
-# 
-# before_script:
+before_script:
   # - echo no | android create avd --force -n test -t android-29 --abi x86
   - echo no | $HOME/android-sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-$ANDROID_DEVICE_API;default;$ANDROID_DEVICE_TYPE"
   # For running the tests emulator must be running breforehand
